@@ -1,0 +1,55 @@
+table Calendar
+	lineageTag: 7b6c77b6-cd49-4959-844e-6378c3628a2c
+
+	column Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3aec48f1-7096-4ca2-a32b-e03ce5f10add
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column dateId
+		dataType: int64
+		formatString: 0
+		lineageTag: bdb2982f-ba5f-472b-8ad4-1b5ba9431d6c
+		summarizeBy: none
+		sourceColumn: dateId
+
+		annotation SummarizationSetBy = Automatic
+
+	column monthId
+		dataType: int64
+		formatString: 0
+		lineageTag: 19efcd81-9ca0-470e-af1d-733e2101ec29
+		summarizeBy: none
+		sourceColumn: monthId
+
+		annotation SummarizationSetBy = Automatic
+
+	column yearId
+		dataType: int64
+		formatString: 0
+		lineageTag: 0c54c9ab-adb4-4249-9552-066060b0bfa2
+		summarizeBy: none
+		sourceColumn: yearId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendar = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("gennakersrv.database.windows.net", "db", [Query = "SELECT [dateId]
+				      ,[monthId]
+				      ,[yearId]
+				      ,CAST([date] AS datetime2) AS Date
+				  FROM [dax].[Calendar]"])
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

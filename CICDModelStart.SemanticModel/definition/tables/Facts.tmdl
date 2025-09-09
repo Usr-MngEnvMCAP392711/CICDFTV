@@ -1,0 +1,70 @@
+table Facts
+	lineageTag: 1f76200c-d72b-4b46-9b21-195029b365ee
+
+	column quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 441cf991-d7ea-4fdf-b7fc-b47dc2378b0c
+		summarizeBy: sum
+		sourceColumn: quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column dateId
+		dataType: int64
+		formatString: 0
+		lineageTag: a5a49124-a243-429f-9576-955e716723ed
+		summarizeBy: none
+		sourceColumn: dateId
+
+		annotation SummarizationSetBy = Automatic
+
+	column storeId
+		dataType: int64
+		formatString: 0
+		lineageTag: 422a08e4-94ad-4e26-91a6-173aef57fb46
+		summarizeBy: none
+		sourceColumn: storeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount
+		dataType: double
+		lineageTag: bfcb3d4f-f1af-435c-9fd7-d1df46b036a2
+		summarizeBy: sum
+		sourceColumn: amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column currencyCode
+		dataType: string
+		lineageTag: 181d41dd-d04f-459a-8b97-49fc57f5939b
+		summarizeBy: none
+		sourceColumn: currencyCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column productId
+		dataType: int64
+		formatString: 0
+		lineageTag: c7e831d6-1b44-45f8-bb31-59c52836b79a
+		summarizeBy: none
+		sourceColumn: productId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Facts = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("gennakersrv.database.windows.net", "db"),
+				    dax_Facts_Light = Source{[Schema="dax",Item="Facts_Light"]}[Data]
+				in
+				    dax_Facts_Light
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,42 @@
+table Materials
+	lineageTag: b24fb692-aac6-4b73-b873-3195034c516b
+
+	column flag
+		dataType: string
+		lineageTag: 8cbd3064-0f96-45c4-b869-92bc6936e955
+		summarizeBy: none
+		sourceColumn: flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column productId
+		dataType: int64
+		formatString: 0
+		lineageTag: 3ceec879-4731-4f50-a6e4-bd2e29a0aeb9
+		summarizeBy: none
+		sourceColumn: productId
+
+		annotation SummarizationSetBy = Automatic
+
+	column productCategory
+		dataType: int64
+		formatString: 0
+		lineageTag: 5ef00cdc-2696-4973-b913-bb938703aa8c
+		summarizeBy: none
+		sourceColumn: productCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Materials = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("gennakersrv.database.windows.net", "db"),
+				    dax_Materials = Source{[Schema="dax",Item="Materials"]}[Data]
+				in
+				    dax_Materials
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

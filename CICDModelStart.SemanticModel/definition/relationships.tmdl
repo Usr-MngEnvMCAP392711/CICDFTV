@@ -1,0 +1,12 @@
+relationship AutoDetected_9c98b87e-bc2b-4fdc-b975-a457fbf33ca7
+	fromColumn: Facts.storeId
+	toColumn: Stores.storeId
+
+relationship AutoDetected_e5955d89-6c2e-420f-b39e-dfb9837b43da
+	fromColumn: Facts.productId
+	toColumn: Materials.productId
+
+relationship AutoDetected_6d81689b-0704-4759-bcc5-e7de7942fd33
+	fromColumn: Facts.dateId
+	toColumn: Calendar.dateId
+

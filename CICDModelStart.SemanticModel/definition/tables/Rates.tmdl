@@ -1,0 +1,41 @@
+table Rates
+	lineageTag: e46d21e5-2981-41d7-80d2-7391bf845977
+
+	column Rate
+		dataType: double
+		lineageTag: 17a0d692-bede-4010-a337-626114f51061
+		summarizeBy: sum
+		sourceColumn: Rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sourceCurrencyCode
+		dataType: string
+		lineageTag: c554d1a1-ba1c-4ec7-9755-2f7b7573a38c
+		summarizeBy: none
+		sourceColumn: sourceCurrencyCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column targetCurrencyCode
+		dataType: string
+		lineageTag: 307afa5a-f713-4eb3-955d-a72de58a8fc9
+		summarizeBy: none
+		sourceColumn: targetCurrencyCode
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Rates = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("gennakersrv.database.windows.net", "db", [Query="SELECT rateTwo as Rate, sourceCurrencyCode, targetCurrencyCode FROM dax.Rates"])
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

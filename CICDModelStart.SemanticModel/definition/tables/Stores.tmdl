@@ -1,0 +1,49 @@
+table Stores
+	lineageTag: 703300bb-3384-4c17-8879-d5a4b7957a16
+
+	column storeId
+		dataType: int64
+		formatString: 0
+		lineageTag: b522fe29-c448-4d78-858a-320e7f513e0a
+		summarizeBy: none
+		sourceColumn: storeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column channel
+		dataType: string
+		lineageTag: 89cb1f6f-d062-45e2-b16d-ec4c30273143
+		summarizeBy: none
+		sourceColumn: channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column zone
+		dataType: string
+		lineageTag: f95286cd-ce9b-4a72-a142-fa01509b78e2
+		summarizeBy: none
+		sourceColumn: zone
+
+		annotation SummarizationSetBy = Automatic
+
+	column region
+		dataType: string
+		lineageTag: d3c1cc8a-2b1e-486c-ba77-90ce6a051aa0
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Stores = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("gennakersrv.database.windows.net", "db"),
+				    dax_Stores = Source{[Schema="dax",Item="Stores"]}[Data]
+				in
+				    dax_Stores
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
